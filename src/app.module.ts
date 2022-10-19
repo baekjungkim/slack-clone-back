@@ -1,21 +1,31 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+import { LoggerModule } from 'nestjs-pino';
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
-// 외부에서 .env 키 조회 가능
-// const getEnv = async () => {
-//   const response = await axios.get('/비밀키 요청');
-//   return response.data
-// return { DATABSE_NAME: '' };
-// };
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      // load: [getEnv]
+    }),
+    LoggerModule.forRoot({
+      pinoHttp:
+        process.env.NODE_ENV === 'development'
+          ? {
+              transport: {
+                target: 'pino-pretty',
+                options: {
+                  colorlize: true,
+                  levelFirst: true,
+                  translateTime: 'yyyy-mm-dd HH:MM:ss',
+                  ignore: 'hostname,pid',
+                },
+              },
+            }
+          : undefined,
     }),
   ],
   controllers: [AppController],
