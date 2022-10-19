@@ -5,6 +5,10 @@ import { LoggerModule } from 'nestjs-pino';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsersModule } from './users/users.module';
+import { WorkspacesModule } from './workspaces/workspaces.module';
+import { ChannelsModule } from './channels/channels.module';
+import { DmsModule } from './dms/dms.module';
 
 @Module({
   imports: [
@@ -20,13 +24,17 @@ import { AppService } from './app.service';
                 options: {
                   colorlize: true,
                   levelFirst: true,
-                  translateTime: 'yyyy-mm-dd HH:MM:ss',
+                  translateTime: 'SYS:standard',
                   ignore: 'hostname,pid',
                 },
               },
             }
           : undefined,
     }),
+    UsersModule,
+    WorkspacesModule,
+    ChannelsModule,
+    DmsModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
