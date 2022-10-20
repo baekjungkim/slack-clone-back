@@ -11,7 +11,7 @@ export class AppService {
   ) {}
 
   getHello(): string {
-    this.logger.fatal('asdf');
+    this.logger.fatal('getHello!');
     return this.configService.get('PORT');
   }
 }

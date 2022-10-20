@@ -11,6 +11,15 @@ import { ChannelsModule } from './channels/channels.module';
 import { DmsModule } from './dms/dms.module';
 import { UndefinedToNullInerceptor } from 'src/common/interceptors/undefinedToNull.interceptor';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ChannelChats } from 'src/entities/ChannelChats';
+import { ChannelMembers } from 'src/entities/ChannelMembers';
+import { DMs } from 'src/entities/DMs';
+import { Channels } from 'src/entities/Channels';
+import { Mentions } from 'src/entities/Mentions';
+import { Users } from 'src/entities/Users';
+import { WorkspaceMembers } from 'src/entities/WorkspaceMembers';
+import { Workspaces } from 'src/entities/Workspaces';
 
 @Module({
   imports: [
@@ -32,6 +41,18 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
               },
             }
           : undefined,
+    }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
+      entities: [ChannelChats, ChannelMembers, Channels, DMs, Mentions, Users, WorkspaceMembers, Workspaces],
+      autoLoadEntities: true,
+      synchronize: false,
+      logging: true,
     }),
     UsersModule,
     WorkspacesModule,
