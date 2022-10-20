@@ -25,8 +25,8 @@ export class UsersController {
   @ApiCreatedResponse({ type: UserDto })
   @ApiOperation({ summary: '신규 유저 생성' })
   @Post()
-  createUser(@Body() data: JoinRequestDto) {
-    this.usersService.createUser(data);
+  async createUser(@Body() data: JoinRequestDto) {
+    await this.usersService.createUser(data);
   }
 
   @ApiOperation({ summary: '로그인' })

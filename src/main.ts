@@ -6,6 +6,8 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 declare const module: any;
 
@@ -13,8 +15,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   const port = process.env.PORT || 3000;
 
-  app.useLogger(app.get(Logger));
+  app.setGlobalPrefix('/api');
+  app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
+  app.useLogger(app.get(Logger));
   app.use(cookieParser());
   app.use(
     session({
@@ -28,8 +33,6 @@ async function bootstrap() {
   );
   app.use(passport.initialize());
   app.use(passport.session());
-
-  app.setGlobalPrefix('/api');
 
   const config = new DocumentBuilder()
     .setTitle('Sleact API')
