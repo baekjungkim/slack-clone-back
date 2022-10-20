@@ -1,5 +1,10 @@
 import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { User } from 'src/common/decorators/user.decorator';
 import { UserDto } from 'src/common/dto/user.dto';
 import { JoinRequestDto } from 'src/users/dto/join.request.dto';
@@ -21,7 +26,7 @@ export class UsersController {
   @ApiOperation({ summary: '신규 유저 생성' })
   @Post()
   createUser(@Body() data: JoinRequestDto) {
-    return this.usersService.postUsers(data);
+    this.usersService.createUser(data);
   }
 
   @ApiOperation({ summary: '로그인' })
