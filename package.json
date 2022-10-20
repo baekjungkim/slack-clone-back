@@ -19,7 +19,19 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -d ./dataSource.ts",
+    "db:create": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:create -d ./dataSource.ts",
+    "db:drop": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js db:drop -d ./dataSource.ts",
+    "seed": "ts-node ./node_modules/typeorm-extension/dist/cli/index.js seed -d ./dataSource.ts",
+    "schema:drop": "ts-node ./node_modules/typeorm/cli.js schema:drop",
+    "schema:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
+    "db:migrate": "npm run typeorm migration:run -- ./src/migrations -d ./dataSource.ts",
+    "db:migrate:revert": "npm run typeorm migration:revert -- ./src/migrations -d ./dataSource.ts",
+    "migration:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli migration:create ./src/migrations/$npm_config_name",
+    "migration:generate": "npm run typeorm -- migration:generate ./src/migrations/$npm_config_name",
+    "db:create-migration": "npm run typeorm migration:create -- ./src/migrations",
+    "db:generate-migration": "npm run typeorm migration:generate -- ./src/migrations -d ./dataSource.ts"
   },
   "dependencies": {
     "@nestjs/common": "^9.1.4",
@@ -35,12 +47,14 @@
     "nestjs-pino": "^3.1.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "pg": "^8.8.0",
     "pino-http": "^8.2.1",
     "pino-pretty": "^9.1.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "typeorm": "^0.3.10"
+    "typeorm": "^0.3.10",
+    "typeorm-extension": "^2.1.15"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.1.4",
