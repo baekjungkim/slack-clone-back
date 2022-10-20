@@ -28,8 +28,10 @@
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.1.4",
     "@nestjs/swagger": "^6.1.2",
+    "@nestjs/typeorm": "^9.0.1",
     "cookie-parser": "^1.4.6",
     "express-session": "^1.17.3",
+    "mysql2": "^2.3.3",
     "nestjs-pino": "^3.1.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
@@ -37,7 +39,8 @@
     "pino-pretty": "^9.1.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.3.10"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.1.4",
@@ -63,6 +66,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.10.1",
+    "typeorm-model-generator": "^0.4.6",
     "typescript": "^4.7.4",
     "webpack": "^5.74.0",
     "webpack-node-externals": "^3.0.0"
