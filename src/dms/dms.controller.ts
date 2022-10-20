@@ -8,7 +8,7 @@ export class DmsController {
   constructor(private dmsService: DmsService) {}
 
   @Get(':id/chats')
-  @ApiParam({ name: 'url', type: String, description: '워크스페이스 url' })
+  // @ApiParam({ name: 'url', type: String, description: '워크스페이스 url' })
   @ApiParam({ name: 'id', type: String, description: '사용자 ID' })
   @ApiQuery({ name: 'perPage', required: true, description: '한번에 가져오는 개수' })
   @ApiQuery({ name: 'page', required: true, description: '불러올 페이지' })
