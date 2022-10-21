@@ -10,7 +10,7 @@ import { LoggedInGuard } from 'src/auth/guards/logged-in.guard';
 import { NotLoggedInGuard } from 'src/auth/guards/not-logged-in.guard';
 import { User } from 'src/common/decorators/user.decorator';
 import { UserDto } from 'src/common/dto/user.dto';
-import { JoinRequestDto } from 'src/users/dto/join.request.dto';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 
 @ApiTags('USERS')
@@ -18,9 +18,10 @@ import { UsersService } from 'src/users/users.service';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @UseGuards(LocalAuthGuard)
+  @Get()
   @ApiOperation({ summary: '로그인 유저 정보 조회' })
   @ApiOkResponse({ type: UserDto })
-  @Get()
   getMyInfo(@User() user: UserDto) {
     return user || false;
   }
@@ -29,7 +30,7 @@ export class UsersController {
   @ApiCreatedResponse({ type: UserDto })
   @ApiOperation({ summary: '신규 유저 생성' })
   @Post()
-  async createUser(@Body() data: JoinRequestDto) {
+  async createUser(@Body() data: CreateUserDto) {
     await this.usersService.createUser(data);
   }
 

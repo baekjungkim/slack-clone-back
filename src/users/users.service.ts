@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import bcrypt from 'bcrypt';
 import { Repository, DataSource } from 'typeorm';
 import { Users } from 'src/entities/Users';
-import { JoinRequestDto } from 'src/users/dto/join.request.dto';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { WorkspaceMembers } from 'src/entities/WorkspaceMembers';
 import { ChannelMembers } from 'src/entities/ChannelMembers';
 import { PinoLogger } from 'nestjs-pino';
@@ -28,7 +28,7 @@ export class UsersService {
     });
   }
 
-  async createUser({ email, password, nickname }: JoinRequestDto) {
+  async createUser({ email, password, nickname }: CreateUserDto) {
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();

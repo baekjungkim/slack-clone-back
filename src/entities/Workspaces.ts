@@ -16,6 +16,8 @@ import { DMs } from './DMs';
 import { Mentions } from './Mentions';
 import { WorkspaceMembers } from './WorkspaceMembers';
 import { Users } from './Users';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 @Index('name', ['name'], { unique: true })
 @Index('url', ['url'], { unique: true })
@@ -28,6 +30,8 @@ export class Workspaces {
   @Column('varchar', { name: 'name', unique: true, length: 30 })
   name: string;
 
+  @IsString()
+  @IsNotEmpty()
   @Column('varchar', { name: 'url', unique: true, length: 30 })
   url: string;
 
@@ -52,7 +56,9 @@ export class Workspaces {
   @OneToMany(() => Mentions, (mentions) => mentions.Workspace)
   Mentions: Mentions[];
 
-  @OneToMany(() => WorkspaceMembers, (workspacemembers) => workspacemembers.Workspace, { cascade: ['insert'] })
+  @OneToMany(() => WorkspaceMembers, (workspacemembers) => workspacemembers.Workspace, {
+    cascade: ['insert'],
+  })
   WorkspaceMembers: WorkspaceMembers[];
 
   @ManyToOne(() => Users, (users) => users.Workspaces, {
