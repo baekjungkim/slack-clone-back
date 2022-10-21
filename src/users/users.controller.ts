@@ -5,6 +5,9 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
+import { LoggedInGuard } from 'src/auth/guards/logged-in.guard';
+import { NotLoggedInGuard } from 'src/auth/guards/not-logged-in.guard';
 import { User } from 'src/common/decorators/user.decorator';
 import { UserDto } from 'src/common/dto/user.dto';
 import { JoinRequestDto } from 'src/users/dto/join.request.dto';
@@ -19,9 +22,10 @@ export class UsersController {
   @ApiOkResponse({ type: UserDto })
   @Get()
   getMyInfo(@User() user: UserDto) {
-    return user;
+    return user || false;
   }
 
+  @UseGuards(NotLoggedInGuard)
   @ApiCreatedResponse({ type: UserDto })
   @ApiOperation({ summary: '신규 유저 생성' })
   @Post()
@@ -29,7 +33,7 @@ export class UsersController {
     await this.usersService.createUser(data);
   }
 
-  @UseGuards()
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   @ApiOperation({ summary: '로그인' })
   @ApiOkResponse({ type: UserDto })
@@ -37,6 +41,7 @@ export class UsersController {
     return user;
   }
 
+  @UseGuards(LoggedInGuard)
   @ApiOperation({ summary: '로그아웃' })
   @Post('logout')
   logoutUser(@Req() req, @Res() res) {

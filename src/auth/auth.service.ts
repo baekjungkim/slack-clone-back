@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PinoLogger } from 'nestjs-pino';
-import { UsersService } from 'src/users/users.service';
 import bcrypt from 'bcrypt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/entities/Users';
@@ -15,8 +14,11 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string) {
-    const user = await this.usersRepository.findOne({ where: { email } });
-    this.logger.info(user);
+    this.logger.info('AuthService');
+    const user = await this.usersRepository.findOne({
+      where: { email },
+      select: ['id', 'email', 'password'],
+    });
     if (!user) {
       return null;
     }

@@ -1,10 +1,13 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, ExecutionContext } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { PinoLogger } from 'nestjs-pino';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
-  private logger: PinoLogger;
+  constructor(private logger: PinoLogger) {
+    super();
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const can = await super.canActivate(context);
