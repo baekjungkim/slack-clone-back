@@ -20,6 +20,7 @@ import { Mentions } from 'src/entities/Mentions';
 import { Users } from 'src/entities/Users';
 import { WorkspaceMembers } from 'src/entities/WorkspaceMembers';
 import { Workspaces } from 'src/entities/Workspaces';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { Workspaces } from 'src/entities/Workspaces';
     WorkspacesModule,
     ChannelsModule,
     DmsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

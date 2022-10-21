@@ -17,6 +17,13 @@ export class UsersService {
     private usersRepository: Repository<Users>,
   ) {}
 
+  async findByEmail(email: string) {
+    return this.usersRepository.findOne({
+      where: { email },
+      select: ['id', 'email', 'password'],
+    });
+  }
+
   async createUser({ email, password, nickname }: JoinRequestDto) {
     const user = await this.usersRepository.findOne({ where: { email } });
     if (user) {

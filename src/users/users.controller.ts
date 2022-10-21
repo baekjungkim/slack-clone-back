@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import {
   ApiCreatedResponse,
   ApiOkResponse,
@@ -29,9 +29,10 @@ export class UsersController {
     await this.usersService.createUser(data);
   }
 
+  @UseGuards()
+  @Post('login')
   @ApiOperation({ summary: '로그인' })
   @ApiOkResponse({ type: UserDto })
-  @Post('login')
   loginUser(@User() user: UserDto) {
     return user;
   }
